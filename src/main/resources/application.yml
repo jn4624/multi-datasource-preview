@@ -1,6 +1,6 @@
 spring:
   application:
-    name: multi-datasource-preview
+    name: multi-datasource-preview-add-cache
   datasource:
     source:
       hikari:
