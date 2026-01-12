@@ -71,6 +71,14 @@ public class MessageHandler extends TextWebSocketHandler {
 		log.info("Received TextMessage: [{}] from {}", message, senderSession.getId());
 
 		String payload = message.getPayload();
+
+		if (payload.equals("/last")) {
+			messageRepository.findTopByOrderByMessageSequenceDesc()
+				.ifPresent(messageEntity ->
+					sendMessage(senderSession, new Message(messageEntity.getUsername(), messageEntity.getContent())));
+			return;
+		}
+
 		try {
 			Message receivedMessage = objectMapper.readValue(payload, Message.class);
 
